@@ -8,13 +8,18 @@ version = "0.1.0"
 authors = [
   { name="Jesus Alberto Martin del Campo", email="j.a.martin-campo@hotmail.com" },
 ]
-description = "Bayesian optimization with Gaussian Processes for experimental design"
+# Descripción actualizada para incluir el muestreo experimental
+description = "Experimental design and Bayesian optimization with Gaussian Processes and QMC sampling"
 readme = "README.md"
 requires-python = ">=3.9"
+# Se añaden keywords para mejorar la búsqueda del paquete
+keywords = ["bayesian-optimization", "gaussian-processes", "experimental-design", "qmc", "sampling", "chemistry"]
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
+    "Topic :: Scientific/Engineering :: Chemistry",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
 ]
 dependencies = [
     "numpy>=1.21",
