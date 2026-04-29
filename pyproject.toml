@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "chembayes"
-version = "0.1.0"
+version = "0.1.1"
 authors = [
   { name="Jesus Alberto Martin del Campo", email="j.a.martin-campo@hotmail.com" },
 ]
@@ -36,6 +36,10 @@ dependencies = [
 
 [tool.setuptools]
 package-dir = {"" = "src"}
+include-package-data = true
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+chembayes = ["py.typed"]
