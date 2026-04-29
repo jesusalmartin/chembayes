@@ -352,7 +352,7 @@ def optimize_experiment(df, inputs, output, n_tuning_trials=100, n_opt_trials=10
     print(f"Model score (R²): {model.score(pd.DataFrame(X, columns=model.feature_names_in_), y):.4f}")
     print("Best input parameters:")
     for feature, value in opt_params.items():
-        print(f"  {feature}: {value:.3f}")
+        print(f"  {feature}: {value}")
     print(f"Best predicted {output}: {best_output:.4f}")
 
     # ----- Return all important objects -----
