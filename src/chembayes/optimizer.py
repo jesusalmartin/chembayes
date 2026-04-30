@@ -9,6 +9,7 @@ from sklearn.model_selection import LeaveOneOut
 from sklearn.inspection import permutation_importance, partial_dependence
 from scipy.stats import norm
 import optuna
+optuna.logging.set_verbosity(optuna.logging.WARNING)
 
 def create_objective(df, weights):
     """
