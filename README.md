@@ -12,7 +12,13 @@
 
 ## 📦 Installation
 
-From the project root (where `pyproject.toml` is located):
+You can install the latest stable version directly from PyPI:
+
+```bash
+pip install chembayes
+```
+
+Alternatively, for local development, you can install from the project root:
 
 ```bash
 pip install .
