@@ -214,13 +214,21 @@ def optimize_experiment(df, inputs, output, n_tuning_trials=100, n_opt_trials=10
     if plot:
         # True vs predicted with uncertainty
         y_pred, sigma = model.predict(pd.DataFrame(X, columns=model.feature_names_in_), return_std=True)
+        y_upper = y_pred + 2*sigma
+        y_lower = y_pred - 2*sigma
+        all_values = np.concatenate([y, y_pred, y_upper, y_lower])
+
         plt.figure()
-        sc = plt.scatter(y, y_pred, c=sigma, alpha=0.6, cmap='coolwarm', edgecolor='k', linewidth=0.5)
-        plt.colorbar(sc, label=f'Prediction std ({output})')
+        plt.errorbar(y, y_pred, yerr=2*sigma,fmt='o',
+                     ecolor='lightgray', elinewidth=1, capsize=3,
+                     #mfc='royalblue',
+                     mec='white', alpha=0.8)
+        #sc = plt.scatter(y, y_pred, c=sigma, alpha=0.6, cmap='coolwarm', edgecolor='k', linewidth=0.5)
+        #plt.colorbar(sc, label=f'Prediction std ({output})')
         plt.xlabel(f"True {output}")
         plt.ylabel(f"Predicted {output}")
         plt.title(f"{output}: true vs. predicted (colored by uncertainty)")
-        plt.plot([y.min(), y.max()], [y.min(), y.max()], 'k--', linewidth=1)
+        plt.plot([all_values.min(), all_values.max()], [all_values.min(), all_values.max()], 'k--', linewidth=1)
         plt.tight_layout()
         plt.show()
 
