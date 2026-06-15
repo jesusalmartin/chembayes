@@ -86,3 +86,4 @@ print(f"Best configuration: {results['best_params']}")
 **Author:** Jesus Alberto Martin del Campo  
 **Email:** j.a.martin-campo@hotmail.com  
 **GitHub:** [jesusalmartin/chembayes](https://github.com/jesusalmartin/chembayes)
+**DOI:** [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20701727.svg)](https://doi.org/10.5281/zenodo.20701727)
