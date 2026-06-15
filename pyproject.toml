@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "chembayes"
-version = "0.1.3"
+version = "0.1.5"
 authors = [
   { name="Jesus Alberto Martin del Campo", email="j.a.martin-campo@hotmail.com" },
 ]
