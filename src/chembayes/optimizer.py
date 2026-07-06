@@ -320,7 +320,7 @@ class Optimizer:
             print(f"  {feature}: {value}")
         print(f"Best predicted {self.output}: {self.best_output:.4f} ± {self.best_output_sigma:.4f}")
 
-    def plot_true_vs_pred(self):
+    def true_vs_pred_plot(self):
         """
         Plots true target values vs predicted values with 2σ uncertainty bands.
 

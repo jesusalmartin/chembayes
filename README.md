@@ -92,7 +92,7 @@ opt = Optimizer(
 opt.summary()
 
 # Visualize model performance and feature importance
-opt.plot_true_vs_pred()
+opt.true_vs_pred_plot()
 opt.permutation_importance_plot()
 
 # Generate partial dependence plots to understand the response surface
