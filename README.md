@@ -135,3 +135,6 @@ opt.summary()
 **Author:** Jesus Alberto Martin del Campo  
 **Email:** j.a.martin-campo@hotmail.com  
 **GitHub:** [jesusalmartin/chembayes](https://github.com/jesusalmartin/chembayes)
+
+## Citation
+[![DOI](https://zenodo.org/badge/1223460130.svg)](https://doi.org/10.5281/zenodo.20701565)
