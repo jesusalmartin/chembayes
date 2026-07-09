@@ -196,7 +196,7 @@ class Sampler:
         """
         return pd.DataFrame(self.sample)
     
-    def plot(self):
+    def get_plot(self):
         """
         Creates a scatter plot matrix of the numeric parameters in the sample.
 
@@ -205,24 +205,36 @@ class Sampler:
         in a grid of subplots. Only parameters of type 'float' or 'int' are
         included; categorical parameters are ignored.
 
-        The plot is displayed using matplotlib.pyplot.show().
+        Returns
+        -------
+        matplotlib.figure.Figure: The generated figure object.
+        """
+        num_params = [p for p in self.params.keys() if self.params[p]['type'] in ['float', 'int']]
+        n_num_params = len(num_params)
+
+        fig, axes = plt.subplots(n_num_params, n_num_params, figsize=(3*n_num_params, 3*n_num_params))
+        for i, param_1 in enumerate(num_params):
+            for j, param_2 in enumerate(num_params):
+                ax = axes[i, j] if n_num_params > 1 else axes
+                if i >= j:
+                    ax.scatter(self.sample[param_1], self.sample[param_2])
+                    ax.set_xlabel(param_1)
+                    ax.set_ylabel(param_2)
+                else:
+                    ax.axis('off')
+        fig.tight_layout()
+        return fig
+    
+    def plot(self):
+        """
+        Display the scatter plot matrix of the numeric parameters in the sample.
+
+        This is a convenience method that calls get_plot and shows
+        the figure.
 
         Returns
         -------
         None
         """
-        num_params = [p for p in self.params.keys() if self.params[p]['type'] in ['float', 'int']]
-        n_num_params = len(num_params)
-
-        plt.figure(figsize=(3*n_num_params, 3*n_num_params))
-        plot = 1
-        for i, param_1 in enumerate(num_params):
-            for j, param_2 in enumerate(num_params):
-                if i >= j:
-                    plt.subplot(n_num_params, n_num_params, plot)
-                    plt.scatter(self.sample[param_1], self.sample[param_2])
-                    plt.xlabel(param_1)
-                    plt.ylabel(param_2)
-                plot +=1
-        plt.tight_layout()
+        fig = self.get_plot()
         plt.show()

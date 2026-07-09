@@ -417,8 +417,6 @@ class Optimizer:
             - Separate bar charts show the average partial dependence for each category
               of each categorical feature.
 
-        The plots are displayed via matplotlib.
-
         Returns
         -------
         list of matplotlib.figure.Figure
