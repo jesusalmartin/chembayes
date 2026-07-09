@@ -320,7 +320,7 @@ class Optimizer:
             print(f"  {feature}: {value}")
         print(f"Best predicted {self.output}: {self.best_output:.4f} ± {self.best_output_sigma:.4f}")
 
-    def true_vs_pred_plot(self):
+    def get_true_vs_pred_plot(self):
         """
         Plots true target values vs predicted values with 2σ uncertainty bands.
 
@@ -329,7 +329,7 @@ class Optimizer:
 
         Returns
         -------
-        None
+        matplotlib.figure.Figure: The generated figure object.
         """
         # True vs predicted with uncertainty
         y_pred, sigma = self.model.predict(self._x_model, return_std=True)
@@ -337,19 +337,34 @@ class Optimizer:
         y_lower = y_pred - 2*sigma
         all_values = np.concatenate([self.y, y_pred, y_upper, y_lower])
 
-        plt.figure()
-        plt.errorbar(self.y, y_pred, yerr=2*sigma,fmt='o',
+        fig, ax = plt.subplots()
+        ax.errorbar(self.y, y_pred, yerr=2*sigma,fmt='o',
                     ecolor='lightgray', elinewidth=1, capsize=3,
                     #mfc='royalblue',
                     mec='white', alpha=0.8)
-        plt.xlabel(f"True {self.output}")
-        plt.ylabel(f"Predicted {self.output}")
-        plt.title(f"{self.output}: true vs. predicted")
-        plt.plot([all_values.min(), all_values.max()], [all_values.min(), all_values.max()], 'k--', linewidth=1)
-        plt.tight_layout()
+        ax.set_xlabel(f"True {self.output}")
+        ax.set_ylabel(f"Predicted {self.output}")
+        ax.set_title(f"{self.output}: true vs. predicted")
+        ax.plot([all_values.min(), all_values.max()], [all_values.min(), all_values.max()], 'k--', linewidth=1)
+        fig.tight_layout()
+        return fig
+    
+    def true_vs_pred_plot(self):
+        """
+        Display the true target values vs predicted values with 2σ uncertainty
+        bands plot.
+
+        This is a convenience method that calls get_true_vs_pred_plot and shows
+        the figure.
+
+        Returns
+        -------
+        None
+        """
+        fig = self.get_true_vs_pred_plot()
         plt.show()
 
-    def permutation_importance_plot(self):
+    def get_permutation_importance_plot(self):
         """
         Plots permutation importance of the preprocessed features.
 
@@ -358,7 +373,7 @@ class Optimizer:
 
         Returns
         -------
-        None
+        matplotlib.figure.Figure: The generated figure object.
         """
         # Permutation importance
         permutation_result = permutation_importance(self.model, self._x_model, self.y, scoring='r2', n_repeats=30, random_state=42)
@@ -366,14 +381,28 @@ class Optimizer:
         sorted_idx = importances.argsort()[::-1]
         sorted_importances = importances[sorted_idx]
         sorted_features = self._model_features[sorted_idx]
-        plt.figure()
-        plt.barh(sorted_features[:15], sorted_importances[:15])
-        plt.gca().invert_yaxis()
-        plt.xlabel("Permutation importance")
-        plt.tight_layout()
+        fig, ax = plt.subplots()
+        ax.barh(sorted_features[:15], sorted_importances[:15])
+        ax.invert_yaxis()
+        ax.set_xlabel("Permutation importance")
+        fig.tight_layout()
+        return fig
+    
+    def permutation_importance_plot(self):
+        """
+        Display the permutation importance of the preprocessed features plot.
+
+        This is a convenience method that calls get_permutation_importance_plot and shows
+        the figure.
+
+        Returns
+        -------
+        None
+        """
+        fig = self.get_permutation_importance_plot()
         plt.show()
 
-    def partial_dependence_plot(self):
+    def get_partial_dependence_plot(self):
         """
         Generates partial dependence plots for both numeric and categorical features.
 
@@ -392,8 +421,11 @@ class Optimizer:
 
         Returns
         -------
-        None
+        list of matplotlib.figure.Figure
+            A list containing the generated figure objects (e.g., one figure for 
+            numeric features matrix, and/or individual figures for categorical features).
         """
+        figs = []
         # Partial dependence for numeric features: 1D on diagonal, 2D below diagonal
         if self._numeric_features:
             n_plots = len(self._numeric_model_features)
@@ -467,7 +499,7 @@ class Optimizer:
                         # Upper triangular part: hide axes
                         ax.axis('off')
             fig.tight_layout()
-            plt.show()
+            figs.append(fig)
 
         # Partial dependence for categorical features: bar charts per category
         if self._categoric_features:
@@ -496,4 +528,20 @@ class Optimizer:
                 ax.set_ylabel(self.output)
                 ax.tick_params(axis='x', labelrotation=45)
             fig.tight_layout()
+            figs.append(fig)
+        return figs
+    
+    def partial_dependence_plot(self):
+        """
+        Display partial dependence plots for both numeric and categorical features.
+
+        This is a convenience method that calls get_partial_dependence_plot and shows
+        the figures.
+
+        Returns
+        -------
+        None
+        """
+        figs = self.get_partial_dependence_plot()
+        for fig in figs:
             plt.show()
