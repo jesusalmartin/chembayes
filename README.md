@@ -137,4 +137,3 @@ opt.summary()
 **GitHub:** [jesusalmartin/chembayes](https://github.com/jesusalmartin/chembayes)
 
 ## Citation
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21277311.svg)](https://doi.org/10.5281/zenodo.21277311)
